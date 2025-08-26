@@ -1,6 +1,9 @@
 package br.com.felipevalboeno.gestao_vagas.modules.company.useCases;
 
-import javax.crypto.SecretKey;
+import java.time.Duration;
+import java.time.Instant;
+
+
 import javax.naming.AuthenticationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +44,11 @@ public String execute(AuthCompanyDTO authCompanyDTO) throws AuthenticationExcept
         if(!passwordMatches){
             throw new AuthenticationException();
         }
+
         //se forem iguais, retorna token
-       
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
         var token = JWT.create().withIssuer("javagas")
+        .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))//tempo de expiração do token
         .withSubject(company.getId().toString())
         .sign(algorithm);
     return token;
