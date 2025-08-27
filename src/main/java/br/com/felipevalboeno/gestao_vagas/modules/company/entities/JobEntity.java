@@ -13,10 +13,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import lombok.AllArgsConstructor;//onstrutor com argumentos
+import lombok.Builder;
+import lombok.Data;//getter and setter
+import lombok.NoArgsConstructor;//cnstrutor sem argumentos
 
 @Entity(name = "job")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class JobEntity {
 
     @Id
