@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/company")
 public class AuthCompanyController {
 
     @Autowired
     private AuthCompanyUseCase aiAuthCompanyUseCase;
     
-    @PostMapping("/company")
+    @PostMapping("/auth")
     public ResponseEntity<Object> create(@RequestBody AuthCompanyDTO authCompanyDTO){
 
         try {
