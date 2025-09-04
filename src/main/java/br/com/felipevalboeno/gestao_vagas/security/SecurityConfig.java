@@ -19,6 +19,14 @@ public class SecurityConfig {
     @Autowired
     private SecurityCandidateFilter securityCandidateFilter;
 
+
+    private static final String[] SWAGGER_LIST = {
+        "/swagger-ui/**",
+        "/v3/api-docs/**",
+        "/swagger-resources/**"
+
+    };
+
     @Bean //indica que esse método é usado pra definir um objeto gerenciado pelo spring
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.csrf(csrf -> csrf.disable())
@@ -26,6 +34,7 @@ public class SecurityConfig {
             auth.requestMatchers("/candidate/").permitAll()
             .requestMatchers("/company/").permitAll()
             .requestMatchers("/company/auth").permitAll()
+            .requestMatchers(SWAGGER_LIST).permitAll()
             .requestMatchers("/candidate/auth").permitAll();
             
             auth.anyRequest().authenticated();
