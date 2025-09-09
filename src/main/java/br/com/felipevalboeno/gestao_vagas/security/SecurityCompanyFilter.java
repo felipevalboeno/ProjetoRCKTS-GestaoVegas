@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * Classe responsável por aplicar filtros de validação do token.
  */
 @Component
-public class SecurityFilter extends OncePerRequestFilter {
+public class SecurityCompanyFilter extends OncePerRequestFilter {
 
    @Autowired
    private JWTProvider jwtProvider;
