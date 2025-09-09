@@ -52,7 +52,6 @@ public AuthCompanyResponseDTO execute(AuthCompanyDTO authCompanyDTO) throws Auth
         var expiresIn = Instant.now().plus(Duration.ofHours(2));
 
         var token = JWT.create().withIssuer("javagas")
-        .withExpiresAt(Instant.now().plus(Duration.ofHours(2)))//tempo de expiração do token
         .withSubject(company.getId().toString())
         .withExpiresAt(expiresIn)
         .withClaim("roles", Arrays.asList("COMPANY"))
