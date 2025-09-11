@@ -3,7 +3,7 @@ package br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.stereotype.Service;
 
 import br.com.felipevalboeno.gestao_vagas.exceptions.UserNotFoundException;
