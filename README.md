@@ -50,6 +50,8 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 ENTRYPOINT [ "java", "-jar", "app.jar" ]
 ```
  
+## DEPLOY WITH AWS
+1º - Create an account on Amazon AWS
 
 
 
