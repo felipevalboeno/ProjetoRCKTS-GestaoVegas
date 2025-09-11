@@ -23,9 +23,6 @@ import lombok.NoArgsConstructor;
 //@Table(name = "candidate")
 //ao persistir com entity, será entendido que tudo abaixo é uma culuna no banco
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity(name = "candidate")
 public class CandidateEntity {
 
