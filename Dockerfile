@@ -15,10 +15,7 @@
 #ENTRYPOINT [ "java", "-jar", "app.jar" ]
 
 # Fase de build
-FROM ubuntu:latest AS build
-
-# Instala dependências
-RUN apt-get update && apt-get install -y openjdk-18-jdk maven git
+FROM maven:3.9.5-jdk-18 AS build
 
 # Define diretório de trabalho
 WORKDIR /app
@@ -36,7 +33,7 @@ WORKDIR /app
 EXPOSE 8080
 
 # Copia o jar gerado (ajuste o caminho se necessário)
-COPY --from=build /app/target/gestao_vagas-0.0.1.jar app.jar
+COPY --from=build /app/target/gestao_vagas-0.0.1-SNAPSHOT.jar app.jar
 
 # Comando de execução
 ENTRYPOINT ["java", "-jar", "app.jar"]
