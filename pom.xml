@@ -72,10 +72,11 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.30</version>			<!-- use a versão mais recente -->
+			<version>1.18.32</version>			<!-- use a versão mais recente -->
 			<scope>provided</scope>
 		</dependency>
 
+		
 		<dependency>
 			<groupId>jakarta.validation</groupId>
 			<artifactId>jakarta.validation-api</artifactId>
