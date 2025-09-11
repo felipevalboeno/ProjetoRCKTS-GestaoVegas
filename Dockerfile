@@ -16,21 +16,17 @@
 #ENTRYPOINT [ "java", "-jar", "app.jar" ]
 
 # Fase de build
-FROM ubuntu:3.8.6-openjdk-18 AS build
+FROM ubuntu:latest AS build
 
-
-WORKDIR /app
 
 # Copia arquivos do projeto
 COPY . .
 
 # Executa build do Maven (com Lombok processando)
-RUN mvn clean install -DskipTests
+RUN mvn clean install 
 
 # Fase de runtime
 FROM openjdk:18-jdk-slim
-
-WORKDIR /app
 EXPOSE 8080
 
 # Copia o jar gerado
