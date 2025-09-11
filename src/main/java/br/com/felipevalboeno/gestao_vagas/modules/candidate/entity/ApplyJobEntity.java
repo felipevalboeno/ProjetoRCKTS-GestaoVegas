@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import br.com.felipevalboeno.gestao_vagas.modules.candidate.CandidateEntity;
 import br.com.felipevalboeno.gestao_vagas.modules.company.entities.JobEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.felipevalboeno.gestao_vagas.modules.candidate.CandidateEntity;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.dto.ProfileCandidateResponseDTO;
+import br.com.felipevalboeno.gestao_vagas.modules.candidate.entity.CandidateEntity;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ApplyJobCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.CreateCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ListAllJobsByFilterUseCase;

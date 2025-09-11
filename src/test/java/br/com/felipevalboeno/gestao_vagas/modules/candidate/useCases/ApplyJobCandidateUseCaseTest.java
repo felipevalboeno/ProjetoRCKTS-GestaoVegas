@@ -2,7 +2,7 @@ package br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases;
 
 
 
-import static org.mockito.ArgumentMatchers.any;
+
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
@@ -17,9 +17,9 @@ import org.mockito.Mock;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import br.com.felipevalboeno.gestao_vagas.modules.candidate.CandidateEntity;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.CandidateRepository;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.entity.ApplyJobEntity;
+import br.com.felipevalboeno.gestao_vagas.modules.candidate.entity.CandidateEntity;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.repository.ApplyJobRepository;
 import br.com.felipevalboeno.gestao_vagas.modules.company.entities.JobEntity;
 import br.com.felipevalboeno.gestao_vagas.modules.company.repositories.JobRepository;

@@ -1,4 +1,4 @@
-package br.com.felipevalboeno.gestao_vagas.modules.candidate;
+package br.com.felipevalboeno.gestao_vagas.modules.candidate.entity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
