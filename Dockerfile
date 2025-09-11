@@ -16,7 +16,8 @@
 #ENTRYPOINT [ "java", "-jar", "app.jar" ]
 
 # Fase de build
-FROM maven:3.8.6-openjdk-18 AS build
+FROM ubuntu:3.8.6-openjdk-18 AS build
+
 
 WORKDIR /app
 
