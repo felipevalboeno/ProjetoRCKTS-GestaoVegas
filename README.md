@@ -98,4 +98,6 @@ jobs:
             
 ```
 
+OBS: I used Putty to configure the Docker on EC2 AWS.
+
 
