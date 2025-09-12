@@ -52,7 +52,12 @@ ENTRYPOINT [ "java", "-jar", "app.jar" ]
  
 ## DEPLOY WITH AWS
 1º - Create an account on Amazon AWS
-
+2º - Search for "RDS" and go to Create a database
+3º choose standard creation > PostgreSQL > Models: Free level > Create database
+4º Search for EC2
+5º AMI - Kernel6.1 - free > Instância: t3.MICRO - free
+6º Create pair of keys: RSA > .pem
+7º execute instance and connect
 
 
 
