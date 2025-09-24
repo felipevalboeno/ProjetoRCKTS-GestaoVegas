@@ -114,3 +114,7 @@ jobs:
   8. Open Swagger: http://<public_ec2_ip>:8080/swagger-ui/index.html an do a test.
 
 
+# FRONT END: 
+  - Tailwind;
+  - RestTemplate to connect with http request backend
+
