@@ -98,6 +98,19 @@ jobs:
             
 ```
 
-OBS: I used Putty to configure the Docker on EC2 AWS.
+### OBS: 
+  - I used Putty to configure the Docker on EC2 AWS.
+  - I used a Database Client extension to conect a new postgrSQL to EC2 endpoint, and I change the DTABASE_URL on github to this new database that I create.
+
+
+## How to start the application after all this configurations
+  1. Open your Putty app
+  2. Connect on the saved session 
+  3. execute: cd ~/actions-runner
+  4. Check on your github if the runner ar online, if not, execute: ./run.sh
+  5. execute: docker start gestao-vagas 
+  6. execute: docker ps 
+  7. execute: docker logs gestao_vagas , check if the application started as well
+  8. Open Swagger: http://<public_ec2_ip>:8080/swagger-ui/index.html an do a test.
 
 
