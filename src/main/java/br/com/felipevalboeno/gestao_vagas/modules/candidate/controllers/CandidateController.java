@@ -56,7 +56,7 @@ public class CandidateController {
     @Content(
       schema = @Schema(implementation = CandidateEntity.class))
   }),
-  @ApiResponse(responseCode = "400", description = "User already exists")
+  @ApiResponse(responseCode = "400", description = "Usuário já existe.")
 
 })
   public ResponseEntity<Object> create(@Valid @RequestBody CandidateEntity candidateEntity) {
