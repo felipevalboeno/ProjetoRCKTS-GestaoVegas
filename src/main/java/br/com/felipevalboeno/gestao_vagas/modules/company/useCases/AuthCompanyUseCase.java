@@ -1,5 +1,6 @@
 package br.com.felipevalboeno.gestao_vagas.modules.company.useCases;
 
+
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
@@ -57,9 +58,12 @@ public AuthCompanyResponseDTO execute(AuthCompanyDTO authCompanyDTO) throws Auth
         .withClaim("roles", Arrays.asList("COMPANY"))
         .sign(algorithm);
 
+        var roles = Arrays.asList("COMPANY");
+
         var authCompanyResponseDTO = AuthCompanyResponseDTO.builder()
         .access_token(token)
         .expires_in(expiresIn.toEpochMilli())
+        .roles(roles)
         .build();
 
 
