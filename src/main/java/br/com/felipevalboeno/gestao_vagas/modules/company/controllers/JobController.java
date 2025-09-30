@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.felipevalboeno.gestao_vagas.modules.company.dto.CreateJobDTO;
@@ -100,6 +101,14 @@ public class JobController {
         UUID companyId = UUID.fromString(request.getAttribute("company_id").toString());
         deleteJobUseCase.execute(companyId, jobId);
         return ResponseEntity.ok("Vaga deletada com sucesso");
+    }
+
+    @PostMapping("/company/jobs/delete")
+    @PreAuthorize("hasRole('COMPANY')")
+    public String deleteJobForm(@RequestParam UUID jobId, HttpServletRequest request) {
+        UUID companyId = UUID.fromString(request.getAttribute("company_id").toString());
+        deleteJobUseCase.execute(companyId, jobId);
+        return "redirect:/company/jobs/list";
     }
 
 }
