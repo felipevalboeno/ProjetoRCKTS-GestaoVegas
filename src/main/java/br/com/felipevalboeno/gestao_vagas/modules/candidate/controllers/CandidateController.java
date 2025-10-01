@@ -39,6 +39,9 @@ import jakarta.validation.Valid;
 public class CandidateController {
 
   @Autowired
+  private ListJobsAppliedByCandidateUseCase listJobsAppliedByCandidateUseCase;
+
+  @Autowired
   private CreateCandidateUseCase createCandidateUseCase;
 
   @Autowired
@@ -111,6 +114,7 @@ public class CandidateController {
   })
 
 })
+
 @SecurityRequirement(name = "jwt_auth")
 public List<JobEntity> findJobByFilter(@RequestParam String filter) {
 
@@ -139,29 +143,26 @@ try {
 
 
 
-@Autowired
-private ListJobsAppliedByCandidateUseCase listJobsAppliedByCandidateUseCase;
 
-@GetMapping("/jobs/applied")
+
+@GetMapping("/job")
 @PreAuthorize("hasRole('CANDIDATE')")
-@Operation(summary = "Listar vagas aplicadas",
- description = "Endpoint para listar todas as vagas que o candidato aplicou")
+@Tag(name = "Vagas Candidato", description = "Todas as Vagas do candidato")
+@Operation(summary = "Listar vagas por candidato",
+ description = "Endpoint para listar todas as vagas que contenham o filtro na descrição")
 @ApiResponses({
   @ApiResponse(responseCode = "200", content = {
     @Content(
       array = @ArraySchema(schema = @Schema(implementation = JobEntity.class)))
   })
-})
-@SecurityRequirement(name = "jwt_auth")
-public ResponseEntity<Object> listJobsApplied(HttpServletRequest request) {
-  var idCandidate = request.getAttribute("candidate_id");
 
-  try {
-      var jobs = this.listJobsAppliedByCandidateUseCase.execute(UUID.fromString(idCandidate.toString()));
-      return ResponseEntity.ok().body(jobs);
-  } catch (Exception e) {
-      return ResponseEntity.badRequest().body(e.getMessage());
-  }
+})
+
+@SecurityRequirement(name = "jwt_auth")
+public List<JobEntity> findAllJobById(@RequestParam UUID idCandidate) {
+
+  return this.listJobsAppliedByCandidateUseCase.execute(idCandidate);
+
 }
 
 
