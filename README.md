@@ -1,5 +1,84 @@
 # [Job Management in Technology] - Project, with Spring boot, from the RocketSeat Java training course
 
+
+# BACK END: 
+  - Java;
+  - SpringBoot
+### Estutura do projeto BackEnd
+```
+GESTAO_VAGAS
+├── .mvn
+├── .vscode
+└── src
+└── main
+└── java
+└── br
+└── com
+└── felipevalboeno
+└── gestao_vagas
+│ ├── config/
+│ │ └── SwaggerConfig.java
+│ ├── exceptions/
+│ │ ├── CompanyNotFoundException.java
+│ │ ├── ErrorMessageDTO.java
+│ │ ├── ExceptionHandlerController.java
+│ │ └── JobNotFoundException.java
+│ │ └── UserFoundException.java
+│ │ └── UserNotFoundException.java
+│ └── modules/
+| ├──  candidate/
+| ├──  controllers/
+│ │ └── AuthCandidateController.java
+│ │ └── CandidateController.java
+| ├──  dto/
+│ │ └── AuthCandidateRequestDTO.java
+│ │ └── AuthCandidateResponseDTO.java
+│ │ └── ProfileCandidateResponseDTO.java
+| ├──  entity/
+│ │ └── ApplyJobEntity.java
+│ │ └── CandidateEntity.java
+| ├──  repository/
+│ │ └── ApplyJobRepository.java
+│ │ └── CandidateRepository.java
+| ├──  UseCases/
+│ │ └── ApplyJobCandidateUseCase.java
+│ │ └── AuthCandidateUseCase.java
+│ │ └── CreateCandidateUseCase.java
+│ │ └── ListAllJobsByFilterUseCase.java
+│ │ └── ProfileCandidateUseCase.java
+| ├──  company/
+| ├──  controllers/
+│ │ └── AuthCompanyController.java
+│ │ └── CompanyController.java
+│ │ └── JobController.java
+| ├──  dto/
+│ │ └── AuthCompanyDTO.java
+│ │ └── AuthCompanyResponseDTO.java
+│ │ └── CreateJobDTO.java
+| ├──  entity/
+│ │ └── CompanyEntity.java
+│ │ └── JobEntity.java
+| ├──  repository/
+│ │ └── CompanyRepository.java
+│ │ └── JobRepository.java
+| ├──  UseCases/
+│ │ └── AuthCompanyUseCase.java
+│ │ └── CreateCompanyUseCase.java
+│ │ └── CreateJobUseCase.java
+│ │ └── DeleteJobUseCase.java
+│ │ └── ListAllJobsByCompanyUseCase.java
+| ├──  providers/
+│ │ └── JWTCandidateProvider.java
+│ │ └── JWTProvider.java
+| ├──  security/
+│ │ └── SecurityCandidateFilter.java
+│ │ └── SecurityCompanyFilter.java
+│ │ └── SecurityConfig.java
+├── GestaoVagasApplication.java
+└── application.properties
+
+```
+
 ## DEPLOY WITH RENDER
 To deploy this application, I used the Render platform (cloud hosting). You can use a free version for studies. 
 
