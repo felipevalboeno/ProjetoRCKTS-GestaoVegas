@@ -1,25 +1,21 @@
 package br.com.felipevalboeno.gestao_vagas.modules.candidate.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
-import br.com.felipevalboeno.gestao_vagas.modules.company.entities.JobEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+
 
 //@Table(name = "candidate")
 //ao persistir com entity, será entendido que tudo abaixo é uma culuna no banco
@@ -27,35 +23,31 @@ import lombok.Data;
 @Entity(name = "candidate")
 public class CandidateEntity {
 
-    private List<JobEntity> jobsApplied;
-
-    @ManyToMany
-    @JoinTable(name = "candidate_job", joinColumns = @JoinColumn(name = "candidate_id"), inverseJoinColumns = @JoinColumn(name = "job_id"))
-
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID) // cria o id automatico ao ter um novo dado
+    @GeneratedValue(strategy = GenerationType.UUID)//cria o id automatico ao ter um novo dado
     private UUID id;
 
     @Schema(example = "Felipe Valboeno", requiredMode = RequiredMode.REQUIRED, description = "Nome do candidato ")
     private String name;
 
+  
     @Pattern(regexp = "\\S+", message = "O campo [username] não deve conter espaço")
     @Schema(example = "felipevalboeno", requiredMode = RequiredMode.REQUIRED, description = "Username do candidato ")
     private String username;
 
     @Email(message = "O campo [email] deve conter um e-mail válido.")
-    @Schema(example = "felipe@gmail.com", requiredMode = RequiredMode.REQUIRED, description = "Email do candidato ")
+    @Schema(example = "felipe@gmail.com",requiredMode = RequiredMode.REQUIRED, description = "Email do candidato ")
     private String email;
-
+    
     @Length(min = 10, max = 100, message = "A senha deve conter entre (10) e (100) caracteres.")
     @Schema(example = "SenhaSuperSegura123!", minLength = 10, maxLength = 100, requiredMode = RequiredMode.REQUIRED, description = "Senha do candidato ")
     private String password;
-
+    
     @Schema(example = "Desenvolvedor Java Pleno", requiredMode = RequiredMode.REQUIRED, description = " Breve descrição do candidato ")
     private String description;
     private String curriculum;
 
-    @CreationTimestamp
+   @CreationTimestamp
     private LocalDateTime createdAt;
-
+    
 }
