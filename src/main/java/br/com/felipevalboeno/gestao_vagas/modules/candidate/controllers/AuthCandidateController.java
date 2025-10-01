@@ -12,6 +12,20 @@ import br.com.felipevalboeno.gestao_vagas.modules.candidate.dto.AuthCandidateReq
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.AuthCandidateUseCase;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+
+/**
+ * Controller responsável pela autenticação de candidatos.
+ * 
+ * Permite:
+ * - Gerar token JWT para candidatos registrados
+ * 
+ * Todos os endpoints desta classe são públicos e destinados apenas
+ * para autenticação.
+ * 
+ * @author Felipe
+ * @version 1.0
+ * @since 2025-10-01
+ */
 @RestController
 @RequestMapping("/candidate")
 @Tag(name = "Auth Candidate Controller", description = "Autenticação do candidato")
@@ -20,6 +34,16 @@ public class AuthCandidateController {
     @Autowired
     private AuthCandidateUseCase authCandidateUseCase;
 
+    /**
+     * Endpoint para autenticar um candidato.
+     * 
+     * Recebe as credenciais do candidato (usuario e senha) e retorna um token JWT
+     * caso a autenticação seja bem-sucedida.
+     * 
+     * @param authCandidateRequestDTO objeto contendo usuario e senha do candidato
+     * @return ResponseEntity com token JWT em caso de sucesso, ou mensagem de erro com status 401 se falhar
+     * @throws Exception se ocorrer erro durante a autenticação
+     */
     @PostMapping("/auth")
     public ResponseEntity<Object> auth(@RequestBody AuthCandidateRequestDTO authCandidateRequestDTO) {
         try {

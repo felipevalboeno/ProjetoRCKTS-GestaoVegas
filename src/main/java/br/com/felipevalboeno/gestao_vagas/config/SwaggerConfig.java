@@ -9,22 +9,30 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 
-/*
-@OpenAPIDefinition (
-	info = @Info(
-		title = "Gestão de Vagas API",
-		version = "1.0",
-		description = "API para gerenciar vagas em cursos de TI"
-	)
-)
-@SecurityScheme(name = "jwt_auth", scheme = "bearer", bearerFormat = "JWT",
- type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
+
+/**
+ * Configuração do Swagger/OpenAPI para a API de Gestão de Vagas.
+ * 
+ * Esta classe define:
+ * - Informações gerais da API (título, descrição, versão)
+ * - Configuração de autenticação via JWT para documentação e testes
+ * 
+ * O bean OpenAPI criado aqui é usado pelo Spring para gerar a documentação
+ * Swagger automaticamente.
+ * 
+ * @author Felipe
+ * @version 1.0
+ * @since 2025-10-01
  */
-
 @Configuration
-
 public class SwaggerConfig {
     
+    /**
+     * Cria e configura o bean OpenAPI para a aplicação.
+     * Define título, descrição, versão e esquema de segurança JWT.
+     * 
+     * @return OpenAPI configurado para a aplicação
+     */
     @Bean
     public OpenAPI openAPI(){
         return new OpenAPI()
@@ -41,6 +49,12 @@ public class SwaggerConfig {
     }
 
 
+    /**
+     * Cria o esquema de segurança JWT usado para autenticação
+     * na documentação da API.
+     * 
+     * @return SecurityScheme configurado com Bearer JWT
+     */
     private SecurityScheme createSecurityScheme(){
         return new SecurityScheme()
         .name("jwt_auth")

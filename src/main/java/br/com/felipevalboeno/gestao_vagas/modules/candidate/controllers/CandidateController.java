@@ -32,6 +32,22 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
+
+/**
+ * Controller responsável pelos endpoints do candidato.
+ * 
+ * Permite:
+ * - Cadastro de candidatos
+ * - Consulta de perfil do candidato
+ * - Listagem de vagas com filtro
+ * - Inscrição em vagas
+ * 
+ * Todos os endpoints de perfil e vagas exigem autenticação JWT.
+ * 
+ * @author Felipe
+ * @version 1.0
+ * @since 2025-10-01
+ */
 @RestController
 @RequestMapping("/candidate")
 @Tag(name = "Candidato", description = "Informações do candidato")
@@ -49,6 +65,14 @@ public class CandidateController {
   @Autowired
   private ApplyJobCandidateUseCase applyJobCandidateUseCase;
 
+
+   /**
+     * Endpoint para cadastrar um novo candidato.
+     * 
+     * @param candidateEntity objeto contendo os dados do candidato
+     * @return ResponseEntity com o candidato criado ou mensagem de erro
+     * @throws Exception se o candidato já existir ou houver erro na criação
+     */
   @PostMapping("/")
   @Operation(summary = "Cadastro de candidato", description = "Endpoint para cadastrar um candidato")
   @ApiResponses({
@@ -71,6 +95,14 @@ public class CandidateController {
 
   }
 
+
+  /**
+     * Endpoint para consultar o perfil do candidato autenticado.
+     * 
+     * @param request HttpServletRequest contendo o atributo "candidate_id"
+     * @return ResponseEntity com os dados do perfil do candidato ou mensagem de erro
+     * @throws Exception se o candidato não for encontrado
+     */
   @GetMapping("/")
   @PreAuthorize("hasRole('CANDIDATE')")
   //@Tag(name = "Candidato", description = "Informações do candidato")
@@ -98,6 +130,12 @@ public class CandidateController {
 
   }
 
+  /**
+     * Endpoint para listar todas as vagas que contenham o filtro na descrição.
+     * 
+     * @param filter texto usado para filtrar vagas por descrição
+     * @return Lista de JobEntity que correspondem ao filtro
+     */
 @GetMapping("/job")
 @PreAuthorize("hasRole('CANDIDATE')")
 //@Tag(name = "Candidato", description = "Informações do candidato")
@@ -118,6 +156,14 @@ public List<JobEntity> findJobByFilter(@RequestParam String filter) {
 
 }
 
+    /**
+     * Endpoint para inscrever o candidato em uma vaga específica.
+     * 
+     * @param request HttpServletRequest contendo o atributo "candidate_id"
+     * @param idJob UUID da vaga em que o candidato deseja se inscrever
+     * @return ResponseEntity com confirmação da inscrição ou mensagem de erro
+     * @throws Exception se houver problema ao inscrever o candidato
+     */
 @PostMapping("/job/apply")
 @PreAuthorize("hasRole('CANDIDATE')")
 @SecurityRequirement(name = "jwt_auth")
