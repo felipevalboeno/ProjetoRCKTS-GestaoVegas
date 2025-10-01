@@ -31,6 +31,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/company/job")
+@Tag(name = "Vagas", description = "Gerenciamento de vagas")
 public class JobController {
 
     @Autowired
@@ -44,7 +45,7 @@ public class JobController {
 
     @PostMapping("/")
     @PreAuthorize("hasRole('COMPANY')") // so a company pode criar vaga
-    @Tag(name = "Vagas", description = "Informações sobre vagas")
+    @Tag(name = "Vagas", description = "Cadastro de vagas")
     @Operation(summary = "Cadastro de vagas", description = "Endpoint para cadastro de vagas (somente para empresas).")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {
