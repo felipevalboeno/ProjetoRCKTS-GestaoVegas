@@ -75,10 +75,25 @@ private ListJobsAppliedByCandidateUseCase listJobsAppliedByCandidateUseCase;
 
   }
 
-  @GetMapping("/jobs/applied")
+@GetMapping("/jobs/applied")
 @PreAuthorize("hasRole('CANDIDATE')")
-@Operation(summary = "Listar vagas aplicadas",
-           description = "Endpoint para listar todas as vagas que o candidato aplicou")
+@Operation(
+    summary = "Listar vagas aplicadas pelo candidato",
+    description = "Endpoint que retorna todas as vagas em que o candidato autenticado aplicou"
+)
+@ApiResponses({
+    @ApiResponse(
+        responseCode = "200",
+        description = "Lista de vagas aplicadas",
+        content = @Content(
+            array = @ArraySchema(schema = @Schema(implementation = JobEntity.class))
+        )
+    ),
+    @ApiResponse(
+        responseCode = "400",
+        description = "Erro ao buscar as vagas aplicadas"
+    )
+})
 @SecurityRequirement(name = "jwt_auth")
 public ResponseEntity<Object> listJobsApplied(HttpServletRequest request) {
     var idCandidate = request.getAttribute("candidate_id");
