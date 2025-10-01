@@ -15,7 +15,7 @@ public class ListJobsAppliedByCandidateUseCase {
     @Autowired
     private JobRepository jobRepository;
 
-    public List<JobEntity> execute(UUID idCandidate) {
-        return this.jobRepository.findJobsAppliedByCandidateId(idCandidate);
-    }
+    // public List<JobEntity> execute(UUID idCandidate) {
+    //     return this.jobRepository.findJobsAppliedByCandidateId(idCandidate);
+    // }
 }
