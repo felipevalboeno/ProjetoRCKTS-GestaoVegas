@@ -16,6 +16,26 @@ You can access the documentation using the url bellow:
 
 - [Swagger](http://3.139.102.156:8080/swagger-ui/index.html#/)
 
+- Endpoints:
+    - Job listing
+    - Job registration
+    - Delete job
+    - Candidate Auth
+    - Job Apply
+    - Candidate profile
+    - Candidate Register
+    - Job listing by candidate
+    - Company register
+    - Auth company
+      
+ 
+  <img width="558" height="281" alt="image" src="https://github.com/user-attachments/assets/b2cfa937-cfa7-4bdd-9a33-016e9e5963e2" />
+  <img width="775" height="502" alt="image" src="https://github.com/user-attachments/assets/358feda2-aeb6-4981-b0a7-5be26a02cb20" />
+  <img width="635" height="302" alt="image" src="https://github.com/user-attachments/assets/1c6eeca8-23d4-4ea6-9143-18c4c1f30224" />
+
+
+
+
 # BACK END: 
   - Java;
   - SpringBoot
