@@ -94,7 +94,7 @@ public class JobController {
 
     @DeleteMapping("/company/{jobId}")
     @PreAuthorize("hasRole('COMPANY')")
-    @Tag(name = "Vagas", description = "Excluir vaga")
+    @Tag(name = "Vagas")
     @Operation(summary = "Excluir vaga", description = "Endpoint para excluir vaga (somente para a empresa dona da vaga).")
     @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<String> deleteJob(@PathVariable UUID jobId, HttpServletRequest request) {
