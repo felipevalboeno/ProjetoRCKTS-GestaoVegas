@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.entity.CandidateEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -29,8 +31,10 @@ import lombok.NoArgsConstructor;//cnstrutor sem argumentos
 @NoArgsConstructor
 public class JobEntity {
 
-    @ManyToMany(mappedBy = "jobsApplied")
-private List<CandidateEntity> candidates;
+
+ @ManyToMany(mappedBy = "jobsApplied")
+    @JsonIgnore  // <-- evita loop infinito
+    private List<CandidateEntity> candidates;
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
