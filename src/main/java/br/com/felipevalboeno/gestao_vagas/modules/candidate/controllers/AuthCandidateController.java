@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDTO;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.AuthCandidateUseCase;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/candidate")
+@Tag(name = "Auth Candidat Controllere", description = "Autenticação do candidato")
 public class AuthCandidateController {
 
     @Autowired

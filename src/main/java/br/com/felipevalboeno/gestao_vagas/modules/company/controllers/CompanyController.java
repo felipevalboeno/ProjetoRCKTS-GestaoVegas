@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.felipevalboeno.gestao_vagas.exceptions.UserFoundException;
 import br.com.felipevalboeno.gestao_vagas.modules.company.entities.CompanyEntity;
 import br.com.felipevalboeno.gestao_vagas.modules.company.useCases.CreateCompanyUseCase;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/company")
+@Tag(name = "Company Controller", description = "Cadastro da empresa")
 public class CompanyController {
 
     @Autowired
