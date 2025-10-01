@@ -103,12 +103,12 @@ public class JobController {
         return ResponseEntity.ok("Vaga deletada com sucesso");
     }
 
-    @PostMapping("/company/jobs/delete")
-    @PreAuthorize("hasRole('COMPANY')")
-    public String deleteJobForm(@RequestParam UUID jobId, HttpServletRequest request) {
-        UUID companyId = UUID.fromString(request.getAttribute("company_id").toString());
-        deleteJobUseCase.execute(companyId, jobId);
-        return "redirect:/company/jobs/list";
-    }
+    // @PostMapping("/company/jobs/delete")
+    // @PreAuthorize("hasRole('COMPANY')")
+    // public String deleteJobForm(@RequestParam UUID jobId, HttpServletRequest request) {
+    //     UUID companyId = UUID.fromString(request.getAttribute("company_id").toString());
+    //     deleteJobUseCase.execute(companyId, jobId);
+    //     return "redirect:/company/jobs/list";
+    // }
 
 }
