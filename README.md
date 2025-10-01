@@ -1,5 +1,15 @@
 # [Job Management in Technology] - Project, with Spring boot, from the RocketSeat Java training course
 
+### Good practices in object-oriented programming
+In this project, you can see:
+    - SOLID
+    - KISS
+    - YAGNI
+    - Unit tests
+    - Integration tests
+    - JavaDoc
+
+
 ## 📈 Monitoring and alerting tool
 
 I used Prometheus for monitoring this application, because it's simple and very useful.  
