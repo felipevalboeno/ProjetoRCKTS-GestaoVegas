@@ -10,6 +10,12 @@ You can test Prometheus in this application using the endpoints below:
 - [Prometheus](http://3.139.102.156:8080/actuator/prometheus)
 
 
+## Documentation
+To document and test the application, I used Swagger.
+You can access the documentation using the url bellow:
+
+- [Swagger](http://3.139.102.156:8080/swagger-ui/index.html#/)
+
 # BACK END: 
   - Java;
   - SpringBoot
