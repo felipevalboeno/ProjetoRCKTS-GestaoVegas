@@ -1,12 +1,10 @@
 package br.com.felipevalboeno.gestao_vagas.modules.company.entities;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import br.com.felipevalboeno.gestao_vagas.modules.candidate.entity.CandidateEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,7 +12,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;//onstrutor com argumentos
@@ -53,8 +50,6 @@ public class JobEntity {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-@ManyToMany(mappedBy = "jobsApplied")
-private List<CandidateEntity> candidates;
 
 
     

@@ -1,22 +1,17 @@
 package br.com.felipevalboeno.gestao_vagas.modules.candidate.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
-import br.com.felipevalboeno.gestao_vagas.modules.company.entities.JobEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.RequiredMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
@@ -54,14 +49,5 @@ public class CandidateEntity {
 
    @CreationTimestamp
     private LocalDateTime createdAt;
-
-    @ManyToMany
-@JoinTable(
-    name = "candidate_job",
-    joinColumns = @JoinColumn(name = "candidate_id"),
-    inverseJoinColumns = @JoinColumn(name = "job_id")
-)
-private List<JobEntity> jobsApplied;
-
     
 }

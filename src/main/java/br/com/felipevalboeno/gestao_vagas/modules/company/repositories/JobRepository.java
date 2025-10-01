@@ -15,6 +15,4 @@ public interface JobRepository extends JpaRepository<JobEntity, UUID> {
 
     List<JobEntity> findByCompanyId(UUID companyId);
 
-    List<JobEntity> findJobsAppliedByCandidateId(UUID candidateId);
-
 }

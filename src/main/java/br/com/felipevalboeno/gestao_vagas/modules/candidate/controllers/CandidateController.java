@@ -19,7 +19,6 @@ import br.com.felipevalboeno.gestao_vagas.modules.candidate.entity.CandidateEnti
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ApplyJobCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.CreateCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ListAllJobsByFilterUseCase;
-import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ListJobsAppliedByCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ProfileCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.company.entities.JobEntity;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,9 +36,6 @@ import jakarta.validation.Valid;
 @RequestMapping("/candidate")
 @Tag(name = "Candidato", description = "Informações do candidato")
 public class CandidateController {
-
-  @Autowired
-  private ListJobsAppliedByCandidateUseCase listJobsAppliedByCandidateUseCase;
 
   @Autowired
   private CreateCandidateUseCase createCandidateUseCase;
@@ -140,33 +136,5 @@ try {
   return ResponseEntity.badRequest().body(e.getMessage());
 }
 }
-
-
-
-
-
-@GetMapping("/job")
-@PreAuthorize("hasRole('CANDIDATE')")
-@Tag(name = "Vagas Candidato", description = "Todas as Vagas do candidato")
-@Operation(summary = "Listar vagas por candidato",
- description = "Endpoint para listar todas as vagas que contenham o filtro na descrição")
-@ApiResponses({
-  @ApiResponse(responseCode = "200", content = {
-    @Content(
-      array = @ArraySchema(schema = @Schema(implementation = JobEntity.class)))
-  })
-
-})
-
-@SecurityRequirement(name = "jwt_auth")
-public List<JobEntity> findAllJobById(@RequestParam UUID idCandidate) {
-
-  return this.listJobsAppliedByCandidateUseCase.execute(idCandidate);
-
-}
-
-
-
-
 
 }
