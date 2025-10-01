@@ -19,6 +19,7 @@ import br.com.felipevalboeno.gestao_vagas.modules.candidate.entity.CandidateEnti
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ApplyJobCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.CreateCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ListAllJobsByFilterUseCase;
+import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ListJobsAppliedByCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ProfileCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.company.entities.JobEntity;
 import io.swagger.v3.oas.annotations.Operation;
@@ -135,5 +136,36 @@ try {
   return ResponseEntity.badRequest().body(e.getMessage());
 }
 }
+
+
+
+@Autowired
+private ListJobsAppliedByCandidateUseCase listJobsAppliedByCandidateUseCase;
+
+@GetMapping("/jobs/applied")
+@PreAuthorize("hasRole('CANDIDATE')")
+@Operation(summary = "Listar vagas aplicadas",
+ description = "Endpoint para listar todas as vagas que o candidato aplicou")
+@ApiResponses({
+  @ApiResponse(responseCode = "200", content = {
+    @Content(
+      array = @ArraySchema(schema = @Schema(implementation = JobEntity.class)))
+  })
+})
+@SecurityRequirement(name = "jwt_auth")
+public ResponseEntity<Object> listJobsApplied(HttpServletRequest request) {
+  var idCandidate = request.getAttribute("candidate_id");
+
+  try {
+      var jobs = this.listJobsAppliedByCandidateUseCase.execute(UUID.fromString(idCandidate.toString()));
+      return ResponseEntity.ok().body(jobs);
+  } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+  }
+}
+
+
+
+
 
 }
