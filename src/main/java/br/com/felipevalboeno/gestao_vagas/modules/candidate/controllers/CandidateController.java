@@ -19,6 +19,7 @@ import br.com.felipevalboeno.gestao_vagas.modules.candidate.entity.CandidateEnti
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ApplyJobCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.CreateCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ListAllJobsByFilterUseCase;
+import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ListAllJobsUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ProfileCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.company.entities.JobEntity;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,6 +37,9 @@ import jakarta.validation.Valid;
 @RequestMapping("/candidate")
 @Tag(name = "Candidato", description = "Informações do candidato")
 public class CandidateController {
+
+  @Autowired
+  private ListAllJobsUseCase listAllJobsUseCase;
 
   @Autowired
   private CreateCandidateUseCase createCandidateUseCase;
@@ -135,6 +139,13 @@ try {
   } catch (Exception e) {
   return ResponseEntity.badRequest().body(e.getMessage());
 }
+}
+
+@GetMapping("/job/all")
+@PreAuthorize("hasRole('CANDIDATE')")
+public List<JobEntity> listAllJobs(@RequestParam(required = false) UUID idJob) {
+  return this.listAllJobsUseCase.execute(idJob == null ? "" : idJob.toString());
+
 }
 
 }
