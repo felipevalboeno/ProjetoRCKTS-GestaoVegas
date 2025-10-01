@@ -117,4 +117,61 @@ jobs:
 # FRONT END: 
   - Tailwind;
   - RestTemplate to connect with http request backend
+### Estutura do projeto FrontEnd
+```
+FRONT_GESTAO_VAGAS
+├── .mvn
+├── .vscode
+└── src
+└── main
+└── java
+└── br
+└── com
+└── felipevalboeno
+└── front_gestao_vagas
+└── modules
+├── candidate
+│ ├── controller/
+│ │ └── CandidateController.java
+│ ├── dto/
+│ │ ├── CreateCandidateDTO.java
+│ │ ├── JobDTO.java
+│ │ ├── ProfileUserDTO.java
+│ │ └── Token.java
+│ └── service/
+│ ├── ApplyJobService.java
+│ ├── CandidateService.java
+│ ├── CreateCandidateService.java
+│ ├── FindJobsService.java
+│ └── ProfileCandidateService.java
+└── company
+├── controller/
+│ └── CompanyController.java
+├── dto/
+│   ├── CreateCompanyDTO.java
+│   └── CreateJobsDTO.java
+├── service/
+│   ├── CreateCompanyService.java
+│   ├── CreateJobService.java
+│   ├── ListAllJobsCompanyService.java
+│   └── LoginCompanyService.java
+├── security/
+│   └── SecurityConfig.java
+├── utils/
+│   └── FrontGestaoVagasApplication.java
+├── resources
+├── static
+├── templates
+│   └── candidate
+│       └── create.html
+│       └── jobs.html
+│       └── login.html
+│       └── profile.html
+│   └── company
+│       └── create.html
+│       └── jobs.html
+│       └── list.html
+│       └── login.html
+└── application.properties
 
+```
