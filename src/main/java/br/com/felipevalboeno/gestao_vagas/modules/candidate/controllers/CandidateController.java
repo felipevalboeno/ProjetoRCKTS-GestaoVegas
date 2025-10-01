@@ -143,9 +143,8 @@ try {
 
 @GetMapping("/job/all")
 @PreAuthorize("hasRole('CANDIDATE')")
-public List<JobEntity> listAllJobs(@RequestParam(required = false) UUID idJob) {
-  return this.listAllJobsUseCase.execute(idJob == null ? "" : idJob.toString());
-
+public List<JobEntity> listAllJobs() {
+    return this.listAllJobsUseCase.execute();
 }
 
 }
