@@ -1,5 +1,14 @@
 # [Job Management in Technology] - Project, with Spring boot, from the RocketSeat Java training course
 
+## 📈 Monitoring and alerting tool
+
+I used Prometheus for monitoring this application, because it's simple and very useful.  
+You can test Prometheus in this application using the endpoints below:
+
+- [Health](http://3.139.102.156:8080/actuator/health)
+- [Metrics](http://3.139.102.156:8080/actuator/metrics)
+- [Prometheus](http://3.139.102.156:8080/actuator/prometheus)
+
 
 # BACK END: 
   - Java;
