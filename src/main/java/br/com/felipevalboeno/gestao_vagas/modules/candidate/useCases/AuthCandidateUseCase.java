@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
-import br.com.felipevalboeno.gestao_vagas.modules.candidate.CandidateRepository;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.dto.AuthCandidateRequestDTO;
 
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.dto.AuthCandidateResponseDTO;
+import br.com.felipevalboeno.gestao_vagas.modules.candidate.repository.CandidateRepository;
 
 @Service
 public class AuthCandidateUseCase {

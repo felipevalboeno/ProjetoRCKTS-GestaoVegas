@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 import br.com.felipevalboeno.gestao_vagas.exceptions.JobNotFoundException;
 import br.com.felipevalboeno.gestao_vagas.exceptions.UserNotFoundException;
-import br.com.felipevalboeno.gestao_vagas.modules.candidate.CandidateRepository;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.entity.ApplyJobEntity;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.repository.ApplyJobRepository;
+import br.com.felipevalboeno.gestao_vagas.modules.candidate.repository.CandidateRepository;
 import br.com.felipevalboeno.gestao_vagas.modules.company.repositories.JobRepository;
 
 @Service

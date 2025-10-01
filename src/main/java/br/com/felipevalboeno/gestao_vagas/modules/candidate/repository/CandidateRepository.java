@@ -1,4 +1,4 @@
-package br.com.felipevalboeno.gestao_vagas.modules.candidate;
+package br.com.felipevalboeno.gestao_vagas.modules.candidate.repository;
 
 import java.util.Optional;
 import java.util.UUID;
