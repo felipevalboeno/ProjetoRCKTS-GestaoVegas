@@ -37,7 +37,8 @@ public class SecurityConfig {
             .requestMatchers("/company/").permitAll()
             .requestMatchers("/company/auth").permitAll()
             .requestMatchers(PERMIT_ALL_LIST).permitAll()
-            .requestMatchers("/candidate/auth").permitAll();
+            .requestMatchers("/candidate/auth").permitAll()
+            .requestMatchers("/candidate/job/applied/view").permitAll();
             
             auth.anyRequest().authenticated();
         })
