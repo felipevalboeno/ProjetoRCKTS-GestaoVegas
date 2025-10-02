@@ -234,6 +234,7 @@ try {
          content = @Content(array = @ArraySchema(schema = @Schema(implementation = AppliedJobResponseDTO.class)))),
      @ApiResponse(responseCode = "400", description = "Erro na listagem")
  })
+ @SecurityRequirement(name = "jwt_auth")
 public String showAppliedJobsPage(Model model, HttpServletRequest request) {
     UUID candidateId = UUID.fromString(request.getAttribute("candidate_id").toString());
     List<AppliedJobResponseDTO> appliedJobs = listJobsAppliedByCandidateUseCase.execute(candidateId);
