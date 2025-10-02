@@ -1,57 +1,37 @@
 name: Gestão de Vagas Application
 
 on: 
-  push:
-    branches: [main]
+    push:
+        branches: [main]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: temurin
-          java-version: 17
-
-      - name: Build project
-        run: mvn clean install
-
-      - name: Free disk space
-        run: |
-          echo "=== Limpando espaço em disco do runner ==="
-          docker system prune -af
-          docker volume prune -f
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf /usr/local/share/boost
-          sudo rm -rf /usr/local/lib/android
-
-      - name: login docker
-        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-
-      - name: Build docker image
-        run: docker build -t felipevalboenodocker/gestao_vagas .
-
-      - name: Publish image
-        run: docker push felipevalboenodocker/gestao_vagas
-
-  deploy:
-    needs: build
-    runs-on: self-hosted
-    steps:
-      - name: Pull image docker hub
-        run: docker pull felipevalboenodocker/gestao_vagas:latest
-
-      - name: remove container
-        run: docker rm -f gestao-vagas || true
-
-      - name: Run docker container gestao-vagas
-        run: docker run -d -p 8080:8080 \
-          -e DATABASE_URL=${{secrets.DATABASE_URL}} \
-          -e DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} \
-          -e DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} \
-          --name gestao-vagas felipevalboenodocker/gestao_vagas
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+            - name: Set up Java
+              uses: actions/setup-java@v3
+              with:
+                distribution: temurin
+                java-version: 17
+            - name: Build project
+              run: mvn clean install
+            - name: login docker
+              run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+            - name: Build docker image
+              run: docker build -t felipevalboenodocker/gestao_vagas .
+            - name: Publish image
+              run: docker push felipevalboenodocker/gestao_vagas
+    deploy:
+        needs: build
+        runs-on: self-hosted
+        steps:
+            - name: Pull image docker hub
+              run: docker pull felipevalboenodocker/gestao_vagas:latest
+            - name: remove container
+              run: docker rm -f gestao-vagas 
+            - name: Run docker container gestao-vagas
+              run: docker run -d -p 8080:8080 -e DATABASE_URL=${{secrets.DATABASE_URL}} -e DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} -e DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} --name gestao-vagas felipevalboenodocker/gestao_vagas
+                
+            
