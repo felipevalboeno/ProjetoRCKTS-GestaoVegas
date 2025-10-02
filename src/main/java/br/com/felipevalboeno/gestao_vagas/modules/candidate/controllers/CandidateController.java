@@ -225,6 +225,8 @@ try {
 // }
 //#endregion
 
+@GetMapping("/job/applied")
+@PreAuthorize("hasRole('CANDIDATE')")
  @Operation(summary = "Listar vagas aplicadas",
             description = "Lista todas as vagas em que o candidato já se inscreveu")
  @ApiResponses({
@@ -232,19 +234,18 @@ try {
          content = @Content(array = @ArraySchema(schema = @Schema(implementation = AppliedJobResponseDTO.class)))),
      @ApiResponse(responseCode = "400", description = "Erro na listagem")
  })
-@GetMapping("/job/applied/view")
-@PreAuthorize("hasRole('CANDIDATE')")
 public String showAppliedJobsPage(Model model, HttpServletRequest request) {
     UUID candidateId = UUID.fromString(request.getAttribute("candidate_id").toString());
     List<AppliedJobResponseDTO> appliedJobs = listJobsAppliedByCandidateUseCase.execute(candidateId);
 
     // Adiciona os dados ao modelo Thymeleaf
-    model.addAttribute("jobs", appliedJobs);
+    var result = model.addAttribute("jobs", appliedJobs);
 
     // Retorna o nome do template (candidate/applied-jobs.html)
-    return "candidate/applied-jobs";
-}
+    return String.valueOf(result);
+    //return "candidate/applied-jobs";
 
+}
 
 
 }
