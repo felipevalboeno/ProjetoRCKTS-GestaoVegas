@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.dto.AppliedJobResponseDTO;
@@ -225,35 +226,68 @@ try {
 // }
 //#endregion
 
-@GetMapping("/job/applied")
-@PreAuthorize("hasRole('CANDIDATE')")
- @Operation(summary = "Listar vagas aplicadas",
-            description = "Lista todas as vagas em que o candidato já se inscreveu")
- @ApiResponses({
-     @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso",
-         content = @Content(array = @ArraySchema(schema = @Schema(implementation = AppliedJobResponseDTO.class)))),
-     @ApiResponse(responseCode = "400", description = "Erro na listagem")
- })
- @SecurityRequirement(name = "jwt_auth")
-public ResponseEntity<List<AppliedJobResponseDTO>> showAppliedJobsPage(Model model, HttpServletRequest request) {
-    UUID candidateId = UUID.fromString(request.getAttribute("candidate_id").toString());
-    //List<AppliedJobResponseDTO> appliedJobs = listJobsAppliedByCandidateUseCase.execute(candidateId);
-    List<AppliedJobResponseDTO> appliedJobs = listJobsAppliedByCandidateUseCase.execute(UUID.fromString(candidateId.toString()));
+// @GetMapping("/job/applied")
+// @PreAuthorize("hasRole('CANDIDATE')")
+//  @Operation(summary = "Listar vagas aplicadas",
+//             description = "Lista todas as vagas em que o candidato já se inscreveu")
+//  @ApiResponses({
+//      @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso",
+//          content = @Content(array = @ArraySchema(schema = @Schema(implementation = AppliedJobResponseDTO.class)))),
+//      @ApiResponse(responseCode = "400", description = "Erro na listagem")
+//  })
+//  @SecurityRequirement(name = "jwt_auth")
+// public ResponseEntity<List<AppliedJobResponseDTO>> showAppliedJobsPage(Model model, HttpServletRequest request) {
+//     UUID candidateId = UUID.fromString(request.getAttribute("candidate_id").toString());
+//     //List<AppliedJobResponseDTO> appliedJobs = listJobsAppliedByCandidateUseCase.execute(candidateId);
+//     List<AppliedJobResponseDTO> appliedJobs = listJobsAppliedByCandidateUseCase.execute(UUID.fromString(candidateId.toString()));
 
 
- return ResponseEntity.ok(appliedJobs);
+//  return ResponseEntity.ok(appliedJobs);
 
-    //var result = this.listJobsAppliedByCandidateUseCase.execute(UUID.fromString(candidateId.toString()));
+//     //var result = this.listJobsAppliedByCandidateUseCase.execute(UUID.fromString(candidateId.toString()));
 
-    //return ResponseEntity.ok().body(result);
-    // Adiciona os dados ao modelo Thymeleaf
-    //var result = model.addAttribute("jobs", appliedJobs);
+//     //return ResponseEntity.ok().body(result);
+//     // Adiciona os dados ao modelo Thymeleaf
+//     //var result = model.addAttribute("jobs", appliedJobs);
 
-    // Retorna o nome do template (candidate/applied-jobs.html)
-    //return String.valueOf(result);
-    //return "candidate/applied-jobs";
+//     // Retorna o nome do template (candidate/applied-jobs.html)
+//     //return String.valueOf(result);
+//     //return "candidate/applied-jobs";
 
-}
+// }
+
+//#region Listar vagas aplicadas (HTML + JSON)
+    // Método privado que busca a lista de vagas aplicadas
+    private List<AppliedJobResponseDTO> getAppliedJobs(HttpServletRequest request) {
+        UUID candidateId = UUID.fromString(request.getAttribute("candidate_id").toString());
+        return listJobsAppliedByCandidateUseCase.execute(candidateId);
+    }
+
+    // Endpoint JSON
+    @GetMapping("/job/applied/json")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    @Operation(summary = "Listar vagas aplicadas (JSON)", description = "Retorna as vagas aplicadas pelo candidato em JSON")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", content = {
+            @Content(array = @ArraySchema(schema = @Schema(implementation = AppliedJobResponseDTO.class)))
+        }),
+        @ApiResponse(responseCode = "400", description = "Erro na listagem")
+    })
+    @SecurityRequirement(name = "jwt_auth")
+    public @ResponseBody List<AppliedJobResponseDTO> showAppliedJobsJson(HttpServletRequest request) {
+        return getAppliedJobs(request);
+    }
+
+    // Endpoint HTML (Thymeleaf)
+    @GetMapping("/job/applied")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    @Operation(summary = "Listar vagas aplicadas (HTML)", description = "Renderiza a página com as vagas aplicadas pelo candidato")
+    @SecurityRequirement(name = "jwt_auth")
+    public String showAppliedJobsPage(Model model, HttpServletRequest request) {
+        model.addAttribute("jobs", getAppliedJobs(request));
+        return "candidate/applied-jobs"; // Spring vai renderizar /templates/candidate/applied-jobs.html
+    }
+    //#endregion
 
 
 }
