@@ -235,15 +235,22 @@ try {
      @ApiResponse(responseCode = "400", description = "Erro na listagem")
  })
  @SecurityRequirement(name = "jwt_auth")
-public String showAppliedJobsPage(Model model, HttpServletRequest request) {
+public ResponseEntity<List<AppliedJobResponseDTO>> showAppliedJobsPage(Model model, HttpServletRequest request) {
     UUID candidateId = UUID.fromString(request.getAttribute("candidate_id").toString());
-    List<AppliedJobResponseDTO> appliedJobs = listJobsAppliedByCandidateUseCase.execute(candidateId);
+    //List<AppliedJobResponseDTO> appliedJobs = listJobsAppliedByCandidateUseCase.execute(candidateId);
+    List<AppliedJobResponseDTO> appliedJobs = listJobsAppliedByCandidateUseCase.execute(UUID.fromString(candidateId.toString()));
 
+
+ return ResponseEntity.ok(appliedJobs);
+
+    //var result = this.listJobsAppliedByCandidateUseCase.execute(UUID.fromString(candidateId.toString()));
+
+    //return ResponseEntity.ok().body(result);
     // Adiciona os dados ao modelo Thymeleaf
-    var result = model.addAttribute("jobs", appliedJobs);
+    //var result = model.addAttribute("jobs", appliedJobs);
 
     // Retorna o nome do template (candidate/applied-jobs.html)
-    return String.valueOf(result);
+    //return String.valueOf(result);
     //return "candidate/applied-jobs";
 
 }
