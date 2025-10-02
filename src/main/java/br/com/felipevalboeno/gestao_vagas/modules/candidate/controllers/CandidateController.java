@@ -19,6 +19,7 @@ import br.com.felipevalboeno.gestao_vagas.modules.candidate.entity.CandidateEnti
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ApplyJobCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.CreateCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ListAllJobsByFilterUseCase;
+import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ListJobsAppliedByCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ProfileCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.company.entities.JobEntity;
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,6 +54,9 @@ import jakarta.validation.Valid;
 @Tag(name = "Candidato", description = "Informações do candidato")
 public class CandidateController {
 
+  @Autowired
+  private ListJobsAppliedByCandidateUseCase listJobsAppliedByCandidateUseCase;
+  
   @Autowired
   private CreateCandidateUseCase createCandidateUseCase;
 
@@ -182,5 +186,30 @@ try {
   return ResponseEntity.badRequest().body(e.getMessage());
 }
 }
+
+
+@GetMapping("/job/applied")
+@PreAuthorize("hasRole('CANDIDATE')")
+@SecurityRequirement(name = "jwt_auth")
+@Operation(summary = "Listar vagas aplicadas pelo candidato",
+           description = "Retorna todas as vagas em que o candidato se inscreveu")
+@ApiResponses({
+    @ApiResponse(responseCode = "200", content = {
+        @Content(array = @ArraySchema(schema = @Schema(implementation = JobEntity.class)))
+    })
+})
+public ResponseEntity<Object> listJobsApplied(HttpServletRequest request) {
+    var idCandidate = request.getAttribute("candidate_id");
+
+    try {
+        var jobs = this.listJobsAppliedByCandidateUseCase
+                          .execute(UUID.fromString(idCandidate.toString()));
+        return ResponseEntity.ok().body(jobs);
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+}
+
+
 
 }
