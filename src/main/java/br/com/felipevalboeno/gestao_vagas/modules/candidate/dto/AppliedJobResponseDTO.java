@@ -7,6 +7,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+
+/**
+     * Classe para não expor dados sensíveis e preparar o uso no frontend.
+     * evita loops infinitos visto que temos relacionamentos bidirecionais entre entidades (JobEntity → CompanyEntity → JobEntity).
+     * jobId, description, companyName, appliedAt → campos relevantes para o front-end.
+     * @Schema → garante que o Swagger consiga documentar corretamente o endpoint.
+     */
 @Data
 @AllArgsConstructor
 public class AppliedJobResponseDTO {

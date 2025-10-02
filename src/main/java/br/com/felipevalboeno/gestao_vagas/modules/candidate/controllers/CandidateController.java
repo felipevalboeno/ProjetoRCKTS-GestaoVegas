@@ -71,6 +71,7 @@ public class CandidateController {
   private ApplyJobCandidateUseCase applyJobCandidateUseCase;
 
 
+  //#region Cadastro de candidato
    /**
      * Endpoint para cadastrar um novo candidato.
      * 
@@ -99,8 +100,9 @@ public class CandidateController {
     }
 
   }
+//#endregion
 
-
+  //#region Perfil do candidato
   /**
      * Endpoint para consultar o perfil do candidato autenticado.
      * 
@@ -134,7 +136,9 @@ public class CandidateController {
     }
 
   }
+//#endregion
 
+  //#region Listar vagas por filtro
   /**
      * Endpoint para listar todas as vagas que contenham o filtro na descrição.
      * 
@@ -153,14 +157,18 @@ public class CandidateController {
   })
 
 })
+//#endregion
 
+//#region Listar vagas por filtro
 @SecurityRequirement(name = "jwt_auth")
 public List<JobEntity> findJobByFilter(@RequestParam String filter) {
 
   return this.listAllJobsByFilterUseCase.execute(filter);
 
 }
+//#endregion
 
+//#region Inscrever candidato em uma vaga
     /**
      * Endpoint para inscrever o candidato em uma vaga específica.
      * 
@@ -187,7 +195,18 @@ try {
   return ResponseEntity.badRequest().body(e.getMessage());
 }
 }
+//#endregion
 
+//#region Listar todas vagas aplicadas pelo candidato
+/**
+ * 
+ * Expõe o UseCase via HTTP para que o front-end possa listar as vagas que o candidato aplicou.
+ * Endpoint seguro: exige JWT do candidato.
+ * @GetMapping("/job/applied") → URL clara e RESTful.
+ * @PreAuthorize("hasRole('CANDIDATE')") → garante que só candidatos logados podem acessar.
+ * HttpServletRequest request.getAttribute("candidate_id") → pega o ID do candidato a partir do token JWT.
+ * Retorno ResponseEntity<List<AppliedJobResponseDTO>> → lista tipada de DTO, evita problemas de serialização no Swagger.
+ */
 
 @GetMapping("/job/applied")
 @PreAuthorize("hasRole('CANDIDATE')")
@@ -205,6 +224,7 @@ public ResponseEntity<List<AppliedJobResponseDTO>> listAppliedJobs(HttpServletRe
 
     return ResponseEntity.ok(appliedJobs);
 }
+//#endregion
 
 
 

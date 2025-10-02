@@ -34,7 +34,7 @@ public class CompanyEntity {
     private String description;
 
     @OneToMany(mappedBy = "companyEntity")
-private List<JobEntity> jobs;
+    private List<JobEntity> jobs;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
