@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -158,9 +157,7 @@ public class CandidateController {
   })
 
 })
-//#endregion
 
-//#region Listar vagas por filtro
 @SecurityRequirement(name = "jwt_auth")
 public List<JobEntity> findJobByFilter(@RequestParam String filter) {
 
@@ -227,16 +224,6 @@ public ResponseEntity<List<AppliedJobResponseDTO>> listAppliedJobs(HttpServletRe
 }
 //#endregion
 
-
-@Controller
-@RequestMapping("/candidate")
-public class CandidateViewController {
-
-    @GetMapping("/job/applied/view")
-    public String showAppliedJobsPage() {
-        return "candidate/applied-jobs"; // esse é o HTML em src/main/resources/templates/candidate/applied-jobs.html
-    }
-}
 
 
 }
