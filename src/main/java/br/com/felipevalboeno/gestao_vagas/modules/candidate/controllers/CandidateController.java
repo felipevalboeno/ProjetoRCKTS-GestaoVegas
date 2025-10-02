@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.felipevalboeno.gestao_vagas.modules.candidate.dto.AppliedJobResponseDTO;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.dto.ProfileCandidateResponseDTO;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.entity.CandidateEntity;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ApplyJobCandidateUseCase;
@@ -190,25 +191,21 @@ try {
 
 @GetMapping("/job/applied")
 @PreAuthorize("hasRole('CANDIDATE')")
-@SecurityRequirement(name = "jwt_auth")
-@Operation(summary = "Listar vagas aplicadas pelo candidato",
-           description = "Retorna todas as vagas em que o candidato se inscreveu")
+@Operation(summary = "Listar vagas aplicadas",
+           description = "Lista todas as vagas em que o candidato já se inscreveu")
 @ApiResponses({
-    @ApiResponse(responseCode = "200", content = {
-        @Content(array = @ArraySchema(schema = @Schema(implementation = JobEntity.class)))
-    })
+    @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso",
+        content = @Content(array = @ArraySchema(schema = @Schema(implementation = AppliedJobResponseDTO.class)))),
+    @ApiResponse(responseCode = "400", description = "Erro na listagem")
 })
-public ResponseEntity<Object> listJobsApplied(HttpServletRequest request) {
-    var idCandidate = request.getAttribute("candidate_id");
+@SecurityRequirement(name = "jwt_auth")
+public ResponseEntity<List<AppliedJobResponseDTO>> listAppliedJobs(HttpServletRequest request) {
+    var idCandidate = UUID.fromString(request.getAttribute("candidate_id").toString());
+    var appliedJobs = this.listJobsAppliedByCandidateUseCase.execute(idCandidate);
 
-    try {
-        var jobs = this.listJobsAppliedByCandidateUseCase
-                          .execute(UUID.fromString(idCandidate.toString()));
-        return ResponseEntity.ok().body(jobs);
-    } catch (Exception e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
+    return ResponseEntity.ok(appliedJobs);
 }
+
 
 
 

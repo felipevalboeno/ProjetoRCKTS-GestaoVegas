@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,6 +43,7 @@ public class JobEntity {
     private String level;
 
     @ManyToOne
+    @JsonIgnoreProperties("jobs")
     @JoinColumn(name = "company_id", insertable = false, updatable = false)
     private CompanyEntity companyEntity;
 
@@ -49,6 +52,8 @@ public class JobEntity {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+
 
 
 
