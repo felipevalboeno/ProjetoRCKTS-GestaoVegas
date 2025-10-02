@@ -246,6 +246,52 @@ jobs:
 # FRONT END: 
   - Tailwind;
   - RestTemplate to connect with http request backend
+
+## Pages
+### CANDIDATE
+ 1- Login candidate
+ 
+ <img width="500" height="600" alt="image" src="https://github.com/user-attachments/assets/a15ce1da-e246-499a-8322-5a723931a635" />
+
+ 2- Candidate register
+ 
+ <img width="500" height="600" alt="image" src="https://github.com/user-attachments/assets/6e84672f-0d62-4e95-8af3-e2f434be8eec" />
+
+ 3- Candidate profile
+
+ <img width="800" height="500" alt="image" src="https://github.com/user-attachments/assets/f09fea56-0ba8-48e4-8450-a87c0b9692e9" />
+
+ 4- Jobs to apply
+ 
+ <img width="800" height="500" alt="image" src="https://github.com/user-attachments/assets/1b4c9ce8-2a59-4bf5-bd16-e78578f3f96c" />
+
+ ### COMPANY
+ 
+ 1- Login company
+
+ <img width="500" height="600" alt="image" src="https://github.com/user-attachments/assets/0b4a711f-1f3b-4cd9-a271-ce62b56564ae" />
+
+ 2- Company register
+
+ <img width="500" height="600" alt="image" src="https://github.com/user-attachments/assets/47835a7d-08d3-428d-ab7b-84d7d7b89c02" />
+
+ 3- Company jobs register
+ 
+ <img width="800" height="500" alt="image" src="https://github.com/user-attachments/assets/87f6cbd8-1390-44d6-a71d-4b0126c9df5d" />
+
+ 4- Company Jobs listing
+ 
+<img width="800" height="500" alt="image" src="https://github.com/user-attachments/assets/29c3ff63-2b45-4676-a84f-ea505837cb9c" />
+
+ 
+
+
+
+
+
+
+
+
 ### Estutura do projeto FrontEnd
 ```
 FRONT_GESTAO_VAGAS
