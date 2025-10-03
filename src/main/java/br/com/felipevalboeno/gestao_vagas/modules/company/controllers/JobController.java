@@ -57,9 +57,6 @@ public class JobController {
 
         var companyId = request.getAttribute("company_id"); // recupera o atriuto
 
-        // jobEntity.setCompanyId(UUID.fromString(companyId.toString())); //seta o
-        // companyId convertendo pra UUID
-
         try {
             var jobEntity = JobEntity.builder()
                     .benefits(createJobDTO.getBenefits())
@@ -93,6 +90,7 @@ public class JobController {
         return ResponseEntity.ok().body(result);
     }
 
+    //@DeleteMapping("/company/{jobId}")
     @DeleteMapping("/{jobId}")
     @PreAuthorize("hasRole('COMPANY')")
     @Tag(name = "Vagas")
