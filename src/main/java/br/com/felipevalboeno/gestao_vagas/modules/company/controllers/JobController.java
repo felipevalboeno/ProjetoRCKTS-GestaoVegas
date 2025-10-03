@@ -93,7 +93,7 @@ public class JobController {
         return ResponseEntity.ok().body(result);
     }
 
-    @DeleteMapping("/company/{jobId}")
+    @DeleteMapping("/{jobId}")
     @PreAuthorize("hasRole('COMPANY')")
     @Tag(name = "Vagas")
     @Operation(summary = "Excluir vaga", description = "Endpoint para excluir vaga (somente para a empresa dona da vaga).")
