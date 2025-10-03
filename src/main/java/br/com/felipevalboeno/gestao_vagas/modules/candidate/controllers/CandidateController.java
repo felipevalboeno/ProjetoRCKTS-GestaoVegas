@@ -197,53 +197,34 @@ try {
 }
 
 
-// //#region Listar todas vagas aplicadas pelo candidato
-// /**
-//  * 
-//  * Expõe o UseCase via HTTP para que o front-end possa listar as vagas que o candidato aplicou.
-//  * Endpoint seguro: exige JWT do candidato.
-//  * @GetMapping("/job/applied") → URL clara e RESTful.
-//  * @PreAuthorize("hasRole('CANDIDATE')") → garante que só candidatos logados podem acessar.
-//  * HttpServletRequest request.getAttribute("candidate_id") → pega o ID do candidato a partir do token JWT.
-//  * Retorno ResponseEntity<List<AppliedJobResponseDTO>> → lista tipada de DTO, evita problemas de serialização no Swagger.
-//  */
+//#region Listar todas vagas aplicadas pelo candidato
+/**
+ * 
+ * Expõe o UseCase via HTTP para que o front-end possa listar as vagas que o candidato aplicou.
+ * Endpoint seguro: exige JWT do candidato.
+ * @GetMapping("/job/applied") → URL clara e RESTful.
+ * @PreAuthorize("hasRole('CANDIDATE')") → garante que só candidatos logados podem acessar.
+ * HttpServletRequest request.getAttribute("candidate_id") → pega o ID do candidato a partir do token JWT.
+ * Retorno ResponseEntity<List<AppliedJobResponseDTO>> → lista tipada de DTO, evita problemas de serialização no Swagger.
+ */
 
-// @GetMapping("/job/applied")
-// @PreAuthorize("hasRole('CANDIDATE')")
-// @Operation(summary = "Listar vagas aplicadas",
-//            description = "Lista todas as vagas em que o candidato já se inscreveu")
-// @ApiResponses({
-//     @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso",
-//         content = @Content(array = @ArraySchema(schema = @Schema(implementation = AppliedJobResponseDTO.class)))),
-//     @ApiResponse(responseCode = "400", description = "Erro na listagem")
-// })
-// @SecurityRequirement(name = "jwt_auth")
-// public ResponseEntity<List<AppliedJobResponseDTO>> listAppliedJobs(HttpServletRequest request) {
-//     var idCandidate = UUID.fromString(request.getAttribute("candidate_id").toString());
-//     var appliedJobs = this.listJobsAppliedByCandidateUseCase.execute(idCandidate);
-
-//     return ResponseEntity.ok(appliedJobs);
-
-    
-// }
 @GetMapping("/job/applied")
 @PreAuthorize("hasRole('CANDIDATE')")
- @Operation(summary = "Listar vagas aplicadas pelo candidato",
-            description = "Lista todas as vagas em que o candidato já se inscreveu.")
- @ApiResponses({
-     @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso",
-         content = @Content(array = @ArraySchema(schema = @Schema(implementation = AppliedJobResponseDTO.class)))),
-     @ApiResponse(responseCode = "400", description = "Erro na listagem")
- })
- @SecurityRequirement(name = "jwt_auth")
-public String listAppliedJobs(HttpServletRequest request, Model model) {
+@Operation(summary = "Listar vagas aplicadas",
+           description = "Lista todas as vagas em que o candidato já se inscreveu")
+@ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso",
+        content = @Content(array = @ArraySchema(schema = @Schema(implementation = AppliedJobResponseDTO.class)))),
+    @ApiResponse(responseCode = "400", description = "Erro na listagem")
+})
+@SecurityRequirement(name = "jwt_auth")
+public ResponseEntity<List<AppliedJobResponseDTO>> listAppliedJobs(HttpServletRequest request) {
     var idCandidate = UUID.fromString(request.getAttribute("candidate_id").toString());
     var appliedJobs = this.listJobsAppliedByCandidateUseCase.execute(idCandidate);
 
-    // envia para o thymeleaf
-    model.addAttribute("appliedJobs", appliedJobs);
+    return ResponseEntity.ok(appliedJobs);
 
-    return "candidate/applied-jobs"; // nome do template em src/main/resources/templates/candidate/applied-jobs.html
+    
 }
 
 
