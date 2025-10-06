@@ -238,6 +238,8 @@ public ResponseEntity<List<AppliedJobResponseDTO>> listAppliedJobs(HttpServletRe
 
     
 }
+
+
 @DeleteMapping("/job/apply/{jobId}")
 @PreAuthorize("hasRole('CANDIDATE')")
 @Operation(
