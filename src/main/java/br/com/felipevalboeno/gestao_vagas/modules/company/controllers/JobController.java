@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -19,6 +20,7 @@ import br.com.felipevalboeno.gestao_vagas.modules.company.entities.JobEntity;
 import br.com.felipevalboeno.gestao_vagas.modules.company.useCases.CreateJobUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.company.useCases.DeleteJobUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.company.useCases.ListAllJobsByCompanyUseCase;
+import br.com.felipevalboeno.gestao_vagas.modules.company.useCases.UpdateJobUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,6 +35,10 @@ import jakarta.validation.Valid;
 @RequestMapping("/company/job")
 @Tag(name = "Vagas", description = "Gerenciamento de vagas")
 public class JobController {
+
+
+        @Autowired
+    private UpdateJobUseCase updateJobUseCase;
 
     @Autowired
     private CreateJobUseCase createJobUseCase;
@@ -101,6 +107,30 @@ public class JobController {
         deleteJobUseCase.execute(companyId, jobId);
         return ResponseEntity.ok("Vaga deletada com sucesso");
     }
+    
 
+    @PutMapping("/{jobId}")
+    @PreAuthorize("hasRole('COMPANY')")
+    @Tag(name = "Vagas")
+    @Operation(summary = "Atualizar vaga", description = "Endpoint para atualizar uma vaga existente (somente para a empresa dona da vaga).")
+    @SecurityRequirement(name = "jwt_auth")
+    public ResponseEntity<Object> updateJob(
+            @PathVariable UUID jobId,
+            @Valid @RequestBody CreateJobDTO updateJobDTO,
+            HttpServletRequest request) {
 
+        UUID companyId = UUID.fromString(request.getAttribute("company_id").toString());
+
+        var updatedJobEntity = JobEntity.builder()
+                .description(updateJobDTO.getDescription())
+                .benefits(updateJobDTO.getBenefits())
+                .level(updateJobDTO.getLevel())
+                .build();
+
+        var result = updateJobUseCase.execute(companyId, jobId, updatedJobEntity);
+
+        return ResponseEntity.ok(result);
+    }
 }
+
+

@@ -54,6 +54,53 @@ You can access the documentation using the url bellow:
 # BACK END: 
   - Java;
   - SpringBoot
+
+
+
+### 🏗 Fluxo de Atualização de Vagas
+
+<span style="color:blue;">👤 Cliente / Frontend</span>  
+&nbsp;&nbsp;&nbsp;&nbsp;|  
+&nbsp;&nbsp;&nbsp;&nbsp;| HTTP Request (GET, POST, PUT, DELETE)  
+&nbsp;&nbsp;&nbsp;&nbsp;v  
+
+<span style="color:green;">📝 Controller (JobController)</span>  
+- Recebe request  
+- Valida input / DTO  
+- Pega companyId / path params / headers  
+- Chama Use Case correspondente  
+&nbsp;&nbsp;&nbsp;&nbsp;|  
+&nbsp;&nbsp;&nbsp;&nbsp;v  
+
+<span style="color:orange;">⚙️ Use Case (CreateJobUseCase / UpdateJobUseCase / DeleteJobUseCase)</span>  
+- Lógica de negócio  
+- Valida regras (ex: só empresa dona da vaga pode editar)  
+- Prepara entidade  
+- Chama Repository  
+&nbsp;&nbsp;&nbsp;&nbsp;|  
+&nbsp;&nbsp;&nbsp;&nbsp;v  
+
+<span style="color:purple;">💾 Repository (JobRepository)</span>  
+- Acessa banco de dados  
+- Cria, atualiza, deleta ou busca dados  
+&nbsp;&nbsp;&nbsp;&nbsp;|  
+&nbsp;&nbsp;&nbsp;&nbsp;v  
+
+<span style="color:brown;">🗄 Banco de Dados</span>  
+- Persiste ou retorna entidades  
+&nbsp;&nbsp;&nbsp;&nbsp;|  
+&nbsp;&nbsp;&nbsp;&nbsp;v  
+
+<span style="color:orange;">⚙️ Use Case</span>  
+- Recebe resultado do Repository  
+- Pode aplicar regras finais  
+&nbsp;&nbsp;&nbsp;&nbsp;|  
+&nbsp;&nbsp;&nbsp;&nbsp;v  
+
+<span style="color:green;">📝 Controller</span>  
+- Retorna ResponseEntity para o cliente
+
+
 ### Estutura do projeto BackEnd
 ```
 GESTAO_VAGAS
