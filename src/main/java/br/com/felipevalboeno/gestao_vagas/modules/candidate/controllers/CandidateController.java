@@ -5,21 +5,26 @@ import java.util.UUID;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.dto.AppliedJobResponseDTO;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.dto.ProfileCandidateResponseDTO;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.entity.CandidateEntity;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ApplyJobCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.CreateCandidateUseCase;
+import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.DeleteAppliedJobUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ListAllJobsByFilterUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ListJobsAppliedByCandidateUseCase;
 import br.com.felipevalboeno.gestao_vagas.modules.candidate.useCases.ProfileCandidateUseCase;
@@ -71,7 +76,15 @@ public class CandidateController {
   @Autowired
   private ApplyJobCandidateUseCase applyJobCandidateUseCase;
 
+  @Autowired
+  private DeleteAppliedJobUseCase deleteAppliedJobUseCase;
 
+   public CandidateController(DeleteAppliedJobUseCase deleteAppliedJobUseCase) {
+    this.deleteAppliedJobUseCase = deleteAppliedJobUseCase;
+}
+
+
+  
   //#region Cadastro de candidato
    /**
      * Endpoint para cadastrar um novo candidato.
@@ -225,8 +238,52 @@ public ResponseEntity<List<AppliedJobResponseDTO>> listAppliedJobs(HttpServletRe
 
     
 }
+@DeleteMapping("/job/apply/{jobId}")
+@PreAuthorize("hasRole('CANDIDATE')")
+@Operation(
+    summary = "Desfazer inscrição em vaga",
+    description = "Permite que o candidato cancele sua inscrição em uma vaga específica"
+)
+@ApiResponses({
+    @ApiResponse(responseCode = "200", description = "Inscrição removida com sucesso"),
+    @ApiResponse(responseCode = "400", description = "ID do candidato inválido"),
+    @ApiResponse(responseCode = "401", description = "Token expirado ou inválido"),
+    @ApiResponse(responseCode = "404", description = "Inscrição não encontrada"),
+    @ApiResponse(responseCode = "500", description = "Erro interno ao remover inscrição")
+})
+@SecurityRequirement(name = "jwt_auth")
+public ResponseEntity<String> undoApplication(
+        @PathVariable UUID jobId,
+        HttpServletRequest request) {
 
+    // Recupera o candidate_id do token
+    Object candidateIdAttr = request.getAttribute("candidate_id");
+    if (candidateIdAttr == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body("Token expirado ou inválido. Faça login novamente.");
+    }
 
+    UUID candidateId;
+    try {
+        candidateId = UUID.fromString(candidateIdAttr.toString());
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("ID do candidato inválido.");
+    }
+
+    // Chama o Use Case para deletar a inscrição
+    try {
+        deleteAppliedJobUseCase.execute(candidateId, jobId);
+        return ResponseEntity.ok("Inscrição removida com sucesso");
+    } catch (ResponseStatusException e) {
+        return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Erro ao remover inscrição");
+    }
+}
 
 
 }
+
+
