@@ -3,6 +3,7 @@ package br.com.felipevalboeno.gestao_vagas.modules.company.controllers;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import br.com.felipevalboeno.gestao_vagas.modules.company.dto.CreateJobDTO;
 import br.com.felipevalboeno.gestao_vagas.modules.company.entities.JobEntity;
@@ -96,17 +98,54 @@ public class JobController {
         return ResponseEntity.ok().body(result);
     }
 
-    //@DeleteMapping("/company/{jobId}")
-    @DeleteMapping("/{jobId}")
-    @PreAuthorize("hasRole('COMPANY')")
-    @Tag(name = "Vagas")
-    @Operation(summary = "Excluir vaga", description = "Endpoint para excluir vaga (somente para a empresa dona da vaga).")
-    @SecurityRequirement(name = "jwt_auth")
-    public ResponseEntity<String> deleteJob(@PathVariable UUID jobId, HttpServletRequest request) {
-        UUID companyId = UUID.fromString(request.getAttribute("company_id").toString());
+    // //@DeleteMapping("/company/{jobId}")
+    // @DeleteMapping("/{jobId}")
+    // @PreAuthorize("hasRole('COMPANY')")
+    // @Tag(name = "Vagas")
+    // @Operation(summary = "Excluir vaga", description = "Endpoint para excluir vaga (somente para a empresa dona da vaga).")
+    // @SecurityRequirement(name = "jwt_auth")
+    // public ResponseEntity<String> deleteJob(@PathVariable UUID jobId, HttpServletRequest request) {
+    //     UUID companyId = UUID.fromString(request.getAttribute("company_id").toString());
+    //     deleteJobUseCase.execute(companyId, jobId);
+    //     return ResponseEntity.ok("Vaga deletada com sucesso");
+    // }
+
+@DeleteMapping("/{jobId}")
+@PreAuthorize("hasRole('COMPANY')")
+@Tag(name = "Vagas")
+@Operation(summary = "Excluir vaga", description = "Endpoint para excluir vaga (somente para a empresa dona da vaga).")
+@SecurityRequirement(name = "jwt_auth")
+public ResponseEntity<String> deleteJob(@PathVariable UUID jobId, HttpServletRequest request) {
+
+    // Verifica se o company_id está presente no request (token válido)
+    Object companyIdAttr = request.getAttribute("company_id");
+    if (companyIdAttr == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body("Token expirado ou inválido. Faça login novamente.");
+    }
+
+    // Converte o atributo para UUID
+    UUID companyId;
+    try {
+        companyId = UUID.fromString(companyIdAttr.toString());
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body("ID da empresa inválido.");
+    }
+
+    // Chama o Use Case para deletar a vaga
+    try {
         deleteJobUseCase.execute(companyId, jobId);
         return ResponseEntity.ok("Vaga deletada com sucesso");
+    } catch (ResponseStatusException e) {
+        // Retorna a mesma exceção que o Use Case lança (404 ou 403)
+        return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Erro ao deletar a vaga: " + e.getMessage());
     }
+}
+
     
 
     @PutMapping("/{jobId}")
