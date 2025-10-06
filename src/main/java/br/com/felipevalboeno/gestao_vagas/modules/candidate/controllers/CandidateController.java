@@ -241,7 +241,7 @@ public ResponseEntity<List<AppliedJobResponseDTO>> listAppliedJobs(HttpServletRe
 }
 
 @CrossOrigin(origins = "*")
-@DeleteMapping("/job/apply/{jobId}")
+@DeleteMapping("/{jobId}")
 @PreAuthorize("hasRole('CANDIDATE')")
 @Operation(
     summary = "Desfazer inscrição em vaga",

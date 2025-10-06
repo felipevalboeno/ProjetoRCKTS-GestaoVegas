@@ -98,54 +98,7 @@ public class JobController {
         var result = this.listAllJobsByCompanyUseCase.execute(UUID.fromString(companyId.toString()));
         return ResponseEntity.ok().body(result);
     }
-
-    // //@DeleteMapping("/company/{jobId}")
-    // @DeleteMapping("/{jobId}")
-    // @PreAuthorize("hasRole('COMPANY')")
-    // @Tag(name = "Vagas")
-    // @Operation(summary = "Excluir vaga", description = "Endpoint para excluir vaga (somente para a empresa dona da vaga).")
-    // @SecurityRequirement(name = "jwt_auth")
-    // public ResponseEntity<String> deleteJob(@PathVariable UUID jobId, HttpServletRequest request) {
-    //     UUID companyId = UUID.fromString(request.getAttribute("company_id").toString());
-    //     deleteJobUseCase.execute(companyId, jobId);
-    //     return ResponseEntity.ok("Vaga deletada com sucesso");
-    // }
-
-// @DeleteMapping("/{jobId}")
-// @PreAuthorize("hasRole('COMPANY')")
-// @Tag(name = "Vagas")
-// @Operation(summary = "Excluir vaga", description = "Endpoint para excluir vaga (somente para a empresa dona da vaga).")
-// @SecurityRequirement(name = "jwt_auth")
-// public ResponseEntity<String> deleteJob(@PathVariable UUID jobId, HttpServletRequest request) {
-
-//     // Verifica se o company_id está presente no request (token válido)
-//     Object companyIdAttr = request.getAttribute("company_id");
-//     if (companyIdAttr == null) {
-//         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-//                 .body("Token expirado ou inválido. Faça login novamente.");
-//     }
-
-//     // Converte o atributo para UUID
-//     UUID companyId;
-//     try {
-//         companyId = UUID.fromString(companyIdAttr.toString());
-//     } catch (IllegalArgumentException e) {
-//         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                 .body("ID da empresa inválido.");
-//     }
-
-//     // Chama o Use Case para deletar a vaga
-//     try {
-//         deleteJobUseCase.execute(companyId, jobId);
-//         return ResponseEntity.ok("Vaga deletada com sucesso");
-//     } catch (ResponseStatusException e) {
-//         // Retorna a mesma exceção que o Use Case lança (404 ou 403)
-//         return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
-//     } catch (Exception e) {
-//         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                 .body("Erro ao deletar a vaga: " + e.getMessage());
-//     }
-// }
+ 
 
 @DeleteMapping("/{jobId}")
 @PreAuthorize("hasRole('COMPANY')")
