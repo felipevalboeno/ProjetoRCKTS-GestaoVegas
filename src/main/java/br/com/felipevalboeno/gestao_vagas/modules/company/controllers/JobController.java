@@ -3,6 +3,7 @@ package br.com.felipevalboeno.gestao_vagas.modules.company.controllers;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -110,6 +111,42 @@ public class JobController {
     //     return ResponseEntity.ok("Vaga deletada com sucesso");
     // }
 
+// @DeleteMapping("/{jobId}")
+// @PreAuthorize("hasRole('COMPANY')")
+// @Tag(name = "Vagas")
+// @Operation(summary = "Excluir vaga", description = "Endpoint para excluir vaga (somente para a empresa dona da vaga).")
+// @SecurityRequirement(name = "jwt_auth")
+// public ResponseEntity<String> deleteJob(@PathVariable UUID jobId, HttpServletRequest request) {
+
+//     // Verifica se o company_id está presente no request (token válido)
+//     Object companyIdAttr = request.getAttribute("company_id");
+//     if (companyIdAttr == null) {
+//         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+//                 .body("Token expirado ou inválido. Faça login novamente.");
+//     }
+
+//     // Converte o atributo para UUID
+//     UUID companyId;
+//     try {
+//         companyId = UUID.fromString(companyIdAttr.toString());
+//     } catch (IllegalArgumentException e) {
+//         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//                 .body("ID da empresa inválido.");
+//     }
+
+//     // Chama o Use Case para deletar a vaga
+//     try {
+//         deleteJobUseCase.execute(companyId, jobId);
+//         return ResponseEntity.ok("Vaga deletada com sucesso");
+//     } catch (ResponseStatusException e) {
+//         // Retorna a mesma exceção que o Use Case lança (404 ou 403)
+//         return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+//     } catch (Exception e) {
+//         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                 .body("Erro ao deletar a vaga: " + e.getMessage());
+//     }
+// }
+
 @DeleteMapping("/{jobId}")
 @PreAuthorize("hasRole('COMPANY')")
 @Tag(name = "Vagas")
@@ -117,14 +154,12 @@ public class JobController {
 @SecurityRequirement(name = "jwt_auth")
 public ResponseEntity<String> deleteJob(@PathVariable UUID jobId, HttpServletRequest request) {
 
-    // Verifica se o company_id está presente no request (token válido)
     Object companyIdAttr = request.getAttribute("company_id");
     if (companyIdAttr == null) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body("Token expirado ou inválido. Faça login novamente.");
     }
 
-    // Converte o atributo para UUID
     UUID companyId;
     try {
         companyId = UUID.fromString(companyIdAttr.toString());
@@ -133,18 +168,20 @@ public ResponseEntity<String> deleteJob(@PathVariable UUID jobId, HttpServletReq
                 .body("ID da empresa inválido.");
     }
 
-    // Chama o Use Case para deletar a vaga
     try {
         deleteJobUseCase.execute(companyId, jobId);
         return ResponseEntity.ok("Vaga deletada com sucesso");
     } catch (ResponseStatusException e) {
-        // Retorna a mesma exceção que o Use Case lança (404 ou 403)
         return ResponseEntity.status(e.getStatusCode()).body(e.getReason());
+    } catch (DataIntegrityViolationException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body("Não é possível deletar: existem inscrições nesta vaga");
     } catch (Exception e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Erro ao deletar a vaga: " + e.getMessage());
+                .body("Erro ao deletar a vaga");
     }
 }
+
 
     
 
