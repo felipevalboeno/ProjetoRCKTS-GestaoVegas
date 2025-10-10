@@ -39,11 +39,15 @@ You can access the documentation using the url bellow:
     - Auth company
       
  
- <img width="1787" height="270" alt="image" src="https://github.com/user-attachments/assets/0e33294f-3d72-4321-bf85-2820cc2e00b8" />
- <img width="1782" height="127" alt="image" src="https://github.com/user-attachments/assets/d69ca38a-cdf4-4920-ae3e-c208c2ee72af" />
- <img width="1787" height="336" alt="image" src="https://github.com/user-attachments/assets/d9ba6086-4c3a-4968-bec8-3877a361a6f2" />
- <img width="1775" height="118" alt="image" src="https://github.com/user-attachments/assets/c8d1338b-fd2e-4dc0-9979-2f92bd424738" />
- <img width="1778" height="118" alt="image" src="https://github.com/user-attachments/assets/d40ad381-087c-4e7b-a338-fa4a25b171f5" />
+ ### :camera: Screenshots
+Swagger endpoints         |
+:---------------------:|
+ <img width="1787" height="270" alt="image" src="https://github.com/user-attachments/assets/0e33294f-3d72-4321-bf85-2820cc2e00b8" /> |
+ <img width="1782" height="127" alt="image" src="https://github.com/user-attachments/assets/d69ca38a-cdf4-4920-ae3e-c208c2ee72af" /> |
+ <img width="1787" height="336" alt="image" src="https://github.com/user-attachments/assets/d9ba6086-4c3a-4968-bec8-3877a361a6f2" /> |
+ <img width="1775" height="118" alt="image" src="https://github.com/user-attachments/assets/c8d1338b-fd2e-4dc0-9979-2f92bd424738" /> |
+ <img width="1778" height="118" alt="image" src="https://github.com/user-attachments/assets/d40ad381-087c-4e7b-a338-fa4a25b171f5" /> |
+
 
 
 
