@@ -1,5 +1,10 @@
 # [Job Management in Technology] - Project, with Spring boot, from the RocketSeat Java training course
 
+<p align="center">
+  <img width="500" height="600" alt="image" src="https://github.com/user-attachments/assets/a15ce1da-e246-499a-8322-5a723931a635" />
+</p>
+
+
 ### Good practices in object-oriented programming
 In this project, you can see:
     - SOLID
